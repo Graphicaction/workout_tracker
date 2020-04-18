@@ -42,4 +42,4 @@ const API = {
       return json;
     },
   };
-  
+//const name ="Rashmi";

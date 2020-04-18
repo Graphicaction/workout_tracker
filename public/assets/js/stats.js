@@ -11,7 +11,7 @@ fetch("/api/workouts/range")
 
 API.getWorkoutsInRange()
 
-  function generatePalette() {
+function generatePalette() {
     const arr = [
     "#003f5c",
     "#2f4b7c",
@@ -32,7 +32,9 @@ API.getWorkoutsInRange()
   ]
 
   return arr;
-  }
+}
+
+//Displaying all charts
 function populateChart(data) {
   let durations = duration(data);
   let pounds = calculateTotalWeight(data);
@@ -43,7 +45,7 @@ function populateChart(data) {
   let bar = document.querySelector("#canvas2").getContext("2d");
   let pie = document.querySelector("#canvas3").getContext("2d");
   let pie2 = document.querySelector("#canvas4").getContext("2d");
-
+//creating new line chart
   let lineChart = new Chart(line, {
     type: "line",
     data: {
@@ -91,7 +93,7 @@ function populateChart(data) {
       }
     }
   });
-
+//creating new bar chart
   let barChart = new Chart(bar, {
     type: "bar",
     data: {
@@ -144,7 +146,7 @@ function populateChart(data) {
       }
     }
   });
-
+//creating new pie chart
   let pieChart = new Chart(pie, {
     type: "pie",
     data: {
@@ -164,7 +166,7 @@ function populateChart(data) {
       }
     }
   });
-
+//creating new donut chart
   let donutChart = new Chart(pie2, {
     type: "doughnut",
     data: {
@@ -185,7 +187,7 @@ function populateChart(data) {
     }
   });
 }
-
+//Adding duration in durations array
 function duration(data) {
   let durations = [];
 
@@ -197,7 +199,7 @@ function duration(data) {
 
   return durations;
 }
-
+//Calculating total weight in total array
 function calculateTotalWeight(data) {
   let total = [];
 
@@ -209,7 +211,7 @@ function calculateTotalWeight(data) {
 
   return total;
 }
-
+//Adding workout names in workouts array
 function workoutNames(data) {
   let workouts = [];
 

@@ -18,7 +18,7 @@ async function initWorkout() {
       renderNoWorkoutText()
     }
   }
-  
+  //Adding exercises into workout summary based on the type of exercise
   function tallyExercises(exercises) {
     const tallied = exercises.reduce((acc, curr) => {
       if (curr.type === "resistance") {
@@ -43,7 +43,7 @@ async function initWorkout() {
   
     return new Date(date).toLocaleDateString(options);
   }
-  
+  //Displaying a modal with workout summary
   function renderWorkoutSummary(summary) {
     const container = document.querySelector(".workout-stats");
   
@@ -70,7 +70,7 @@ async function initWorkout() {
       container.appendChild(p);
     });
   }
-  
+  //Displaying modal saying "No workout created!"
   function renderNoWorkoutText() {
     const container = document.querySelector(".workout-stats");
     const p = document.createElement("p");
@@ -80,6 +80,6 @@ async function initWorkout() {
     p.appendChild(strong);
     container.appendChild(p);
   }
-  
+  //console.log(name);
   initWorkout();
   

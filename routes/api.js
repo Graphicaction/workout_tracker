@@ -1,3 +1,4 @@
+
 const API = {
     async getLastWorkout() {
       let res;
@@ -43,3 +44,5 @@ const API = {
     },
   };
 //const name ="Rashmi";
+
+module.exports = API;

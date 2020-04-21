@@ -44,5 +44,3 @@ const API = {
     },
   };
 //const name ="Rashmi";
-
-module.exports = API;

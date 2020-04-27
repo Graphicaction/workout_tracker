@@ -5,7 +5,6 @@ fetch("/api/workouts/range")
     return response.json();
   })
   .then(data => {
-    console.log(data);
     populateChart(data);
   });
 
@@ -31,7 +30,6 @@ function generatePalette() {
     "#ff7c43",
     "ffa600"
   ]
-
   return arr;
 }
 
@@ -62,10 +60,18 @@ function populateChart(data) {
       datasets: [
         {
           label: "Workout Duration In Minutes",
-          backgroundColor: "red",
-          borderColor: "red",
+          backgroundColor: "pink",
+          borderColor: "pink",
           data: durations,
-          fill: false
+          fill: false,
+          pointBackgroundColor: function(context) {
+            var index = context.dataIndex;
+            var value = context.dataset.data[index];
+            return value <= 10 ? 'red' :  // draw points in red if less workout
+                value > 20 ? 'green' :    // else, draw points in green if more workout
+                    'yellow';             //else, draw points in yellow if in between workout
+          },
+          pointRadius: 6
         }
       ]
     },
@@ -191,24 +197,48 @@ function populateChart(data) {
 //Adding duration in durations array
 function duration(data) {
   let durations = [];
-
+  //Finding the day of the week and adding exercise's duration
   data.forEach(workout => {
-    workout.exercises.forEach(exercise => {
-      durations.push(exercise.duration);
+    let d = workout.day;
+    let nd = new Date(d);
+    let i = nd.getDay();
+    workout.exercises.forEach((exercise) => {
+      if(!durations[i])
+        durations[i] = exercise.duration;
+      else 
+        durations[i] += exercise.duration;
     });
   });
-
+  for(let j = 0; j < 7; j++) {
+    if(!durations[j]) {
+      durations[j] = 0;
+    }
+  }
   return durations;
 }
 //Calculating total weight in total array
 function calculateTotalWeight(data) {
   let total = [];
-
+  //For each workout finding day of the week and adding weight accordingly
   data.forEach(workout => {
-    workout.exercises.forEach(exercise => {
-      total.push(exercise.weight);
+    let d = workout.day;
+    let nd = new Date(d);
+    let i = nd.getDay();
+    workout.exercises.forEach((exercise) => {
+      if(exercise.weight){
+        if(!total[i])
+          total[i] = exercise.weight;
+        else
+          total[i] += exercise.weight;
+      }
     });
   });
+
+  for(let j = 0; j < 7; j++) {
+    if(!total[j]) {
+      total[j] = 0;
+    }
+  }
 
   return total;
 }

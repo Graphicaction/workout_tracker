@@ -39,16 +39,22 @@ router.get("/api/workouts", (req, res) => {
 });
 
 router.get("/api/workouts/range", (req, res) => {
-  //Getting start date from where we need to display data on chart
-  const startDay = new Date().setDate(new Date().getDate()-7);
+  //Getting start date and end date to get data in between
+  const today = new Date() 
+  const currDay = today.getDay();
+  
+  const startDay = new Date().setDate(new Date().getDate()-currDay);
+  const endDate = new Date().setDate(new Date().getDate());
+
   Workout.find({
       day: {
-        $gte: startDay
+        $gte: startDay,
+        $lte: endDate
       }
     })
     .populate("exercises")
     .then(dbWorkout => {
-        res.json(dbWorkout);
+      res.json(dbWorkout);
     })
     .catch(err => {
         res.status(400).json(err);
